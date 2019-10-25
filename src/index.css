@@ -5,11 +5,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #34495e;
+  background: #333333;
   color: white;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.MuiFormLabel-root.Mui-focused {
+  color:white !important;
+}
+
+.MuiInput-underline:after {
+  border-bottom: 2px solid white !important;
+}
+
+.MuiInputBase-input {
+  color:White !important;
 }
