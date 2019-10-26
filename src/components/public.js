@@ -14,8 +14,6 @@ const Container = styled.div`
 
 const PublicComponent = () => {
 
-
-
     return <Container>
         <PublicMainComponent />
     </Container>

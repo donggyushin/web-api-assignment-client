@@ -8,16 +8,22 @@ class AppContainer extends React.Component {
   }
   render() {
     const { isLoggedIn } = this.state;
-    return <App isLoggedIn={isLoggedIn} />
+    const { logout } = this;
+    return <App logout={logout} isLoggedIn={isLoggedIn} />
+  }
+
+  logout = () => {
+    localStorage.removeItem('jwt')
+    window.location.href = '/'
   }
 }
 
 
-function App({ isLoggedIn }) {
+function App({ isLoggedIn, logout }) {
 
   return (
     <div>
-      {isLoggedIn ? <PrivateComponent /> : <PublicComponent />}
+      {isLoggedIn ? <PrivateComponent logout={logout} /> : <PublicComponent />}
     </div>
   );
 }

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
+import axios from 'axios'
+import { END_POINT } from 'consts/endpoint';
 
 const Container = styled.div`
     display:flex;
@@ -39,10 +41,45 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+class PublicMainComponentContainer extends React.Component {
+    state = {
+        username: "",
+        password: ""
+    }
+
+    render() {
+        const { handleInput, makeNewAccount } = this;
+        const { username, password } = this.state;
+        return <PublicMainComponent makeNewAccount={makeNewAccount} handleInput={handleInput} username={username} password={password} />
+    }
+
+    makeNewAccount = () => {
+        const { username, password } = this.state;
+        axios.post(END_POINT + 'user/new', {
+            username,
+            password
+        }).then(res => res.data)
+            .then(data => {
+                const { ok, error, jwt } = data;
+                if (ok) {
+                    localStorage.setItem("jwt", jwt)
+                    window.location.href = '/'
+                } else {
+                    alert(error)
+                }
+            })
+            .catch(err => console.error(err))
+    }
+
+    handleInput = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+}
 
 
-
-const PublicMainComponent = () => {
+const PublicMainComponent = ({ username, password, handleInput, makeNewAccount }) => {
 
     const classes = useStyles();
 
@@ -54,6 +91,9 @@ const PublicMainComponent = () => {
                 label="username"
                 className={classes.textField}
                 margin="normal"
+                name={'username'}
+                value={username}
+                onChange={handleInput}
             />
             <TextField
                 required
@@ -62,17 +102,20 @@ const PublicMainComponent = () => {
                 type="password"
                 className={classes.textField}
                 margin="normal"
+                name={'password'}
+                value={password}
+                onChange={handleInput}
             />
         </form>
         <Row>
             <Button color="primary" className={classes.button}>
                 Login
       </Button>
-            <Button color="secondary" className={classes.button}>
+            <Button onClick={makeNewAccount} color="secondary" className={classes.button}>
                 New Account
       </Button>
         </Row>
     </Container>
 }
 
-export default PublicMainComponent
+export default PublicMainComponentContainer
