@@ -1,26 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import clsx from 'clsx';
-const currencies = [
-    {
-        value: 'USD',
-        label: '$',
-    },
-    {
-        value: 'EUR',
-        label: '€',
-    },
-    {
-        value: 'BTC',
-        label: '฿',
-    },
-    {
-        value: 'JPY',
-        label: '¥',
-    },
-];
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -43,12 +24,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function InputComponent({ newtodo, handleInput, newTodo }) {
     const classes = useStyles();
-    const [values, setValues] = React.useState({
-        name: 'Cat in the Hat',
-        age: '',
-        multiline: 'Controlled',
-        currency: 'EUR',
-    });
     return (
         <form style={{
             width: '80%'
