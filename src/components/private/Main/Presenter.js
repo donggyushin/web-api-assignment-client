@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import InputComponent from './Input/InputComponent';
 import TodosContainer from './TodosContainer/TodosContainer';
+import UpdateForm from './UpdateForm/UpdateForm';
 
 
 const Container = styled.div`
@@ -23,7 +24,7 @@ const Logout = styled.div`
     cursor: pointer;
 `
 
-const MainPrivateComponent = ({ todos, logout, newtodo, handleInput, newTodo, toggleTodo }) => <Container>
+const MainPrivateComponent = ({ onEnterKeyPressedToUpdateTodo, updateButtonClicked, todoToUpdate, updateTodo, deleteTodo, todos, logout, newtodo, handleInput, newTodo, toggleTodo, textToUpdate }) => <Container>
     <Logout onClick={logout}>LOGOUT</Logout>
     <Margin />
     <Margin />
@@ -31,7 +32,8 @@ const MainPrivateComponent = ({ todos, logout, newtodo, handleInput, newTodo, to
     <InputComponent handleInput={handleInput} newTodo={newTodo} newtodo={newtodo} />
     <Margin />
     <Margin />
-    <TodosContainer toggleTodo={toggleTodo} todos={todos} />
+    <TodosContainer updateButtonClicked={updateButtonClicked} deleteTodo={deleteTodo} toggleTodo={toggleTodo} todos={todos} />
+    {updateTodo && <UpdateForm onEnterKeyPressedToUpdateTodo={onEnterKeyPressedToUpdateTodo} handleInput={handleInput} textToUpdate={textToUpdate} todoToUpdate={todoToUpdate} />}
 </Container>
 
 export default MainPrivateComponent

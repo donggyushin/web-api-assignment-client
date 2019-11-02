@@ -9,6 +9,6 @@ const Container = styled.div`
     
 `
 
-export default function TodosContainer({ todos, toggleTodo }) {
-    return <Container>{todos.map(todo => <TodoComponent toggleTodo={toggleTodo} key={todo._id} todo={todo} />)}</Container>
+export default function TodosContainer({ todos, toggleTodo, deleteTodo, updateButtonClicked }) {
+    return <Container>{todos.map(todo => <TodoComponent updateButtonClicked={updateButtonClicked} deleteTodo={deleteTodo} toggleTodo={toggleTodo} key={todo._id} todo={todo} />)}</Container>
 }

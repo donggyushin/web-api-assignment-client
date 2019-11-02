@@ -48,9 +48,27 @@ class PublicMainComponentContainer extends React.Component {
     }
 
     render() {
-        const { handleInput, makeNewAccount } = this;
+        const { handleInput, makeNewAccount, login } = this;
         const { username, password } = this.state;
-        return <PublicMainComponent makeNewAccount={makeNewAccount} handleInput={handleInput} username={username} password={password} />
+        return <PublicMainComponent login={login} makeNewAccount={makeNewAccount} handleInput={handleInput} username={username} password={password} />
+    }
+
+    login = () => {
+        const { username, password } = this.state;
+        axios.post(END_POINT + 'user/login', {
+            username,
+            password
+        })
+            .then(res => res.data)
+            .then(data => {
+                const { ok, error, jwt } = data;
+                if (ok) {
+                    window.localStorage.setItem("jwt", jwt);
+                    window.location.href = '/'
+                } else {
+                    alert(error)
+                }
+            }).catch(err => console.error(err))
     }
 
     makeNewAccount = () => {
@@ -79,7 +97,7 @@ class PublicMainComponentContainer extends React.Component {
 }
 
 
-const PublicMainComponent = ({ username, password, handleInput, makeNewAccount }) => {
+const PublicMainComponent = ({ login, username, password, handleInput, makeNewAccount }) => {
 
     const classes = useStyles();
 
@@ -108,7 +126,7 @@ const PublicMainComponent = ({ username, password, handleInput, makeNewAccount }
             />
         </form>
         <Row>
-            <Button color="primary" className={classes.button}>
+            <Button onClick={login} color="primary" className={classes.button}>
                 Login
       </Button>
             <Button onClick={makeNewAccount} color="secondary" className={classes.button}>
